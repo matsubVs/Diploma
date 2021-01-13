@@ -3,7 +3,8 @@ const toggleMenu = () => {
         popupDialogMenu = popupMenu.querySelector('.popup-dialog-menu'),
         menuButton = document.querySelector('.menu'),
         popupCloseButton = popupMenu.querySelector('.close-menu'),
-        footerUpButton = document.querySelector('.button-footer');
+        footerUpButton = document.querySelector('.button-footer'),
+        servicesButton = [...document.querySelectorAll('.link-list')];
 
     let open = false;
 
@@ -30,7 +31,9 @@ const toggleMenu = () => {
     popupMenu.addEventListener('click', event => {
         const target = event.target;
 
-        if (target.matches('.menu-link')) {
+        if (servicesButton.some(item => item.contains(target))) {
+            popupMenuToggler();
+        } else if (target.matches('.menu-link')) {
             event.preventDefault();
             const anchor = document.querySelector(target.getAttribute('href'));
             console.log(anchor);
