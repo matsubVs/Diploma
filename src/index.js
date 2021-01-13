@@ -5,6 +5,7 @@ import phoneMask from './modules/phoneMask';
 import sendForm from './modules/sendForm';
 import consultations from './modules/consultaions';
 import closePopups from './modules/closePopups';
+import faq from './modules/faq';
 
 closePopups();
 additionalNumber();
@@ -13,3 +14,4 @@ allServicesPopup();
 phoneMask();
 sendForm();
 consultations();
+faq();
