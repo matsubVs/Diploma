@@ -100,12 +100,6 @@ const sendForm = () => {
 
         descrBlock.addEventListener('click', () => {
             popupPrivacy.style.visibility = 'visible';
-
-            popupPrivacy.addEventListener('click', event => {
-                if (event.target.matches('.close')) {
-                    popupPrivacy.style.visibility = 'hidden';
-                }
-            });
         });
     }
 };
