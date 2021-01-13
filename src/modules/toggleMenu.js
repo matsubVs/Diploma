@@ -36,7 +36,6 @@ const toggleMenu = () => {
         } else if (target.matches('.menu-link')) {
             event.preventDefault();
             const anchor = document.querySelector(target.getAttribute('href'));
-            console.log(anchor);
             anchor.scrollIntoView({
                 behavior: 'smooth',
                 block: 'nearest'

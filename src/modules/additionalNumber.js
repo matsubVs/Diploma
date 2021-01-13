@@ -8,7 +8,6 @@ const additionalNumber = () => {
     additionalNumberBlock.style.top = '0px';
     
     numberVisibleButton.addEventListener('click', () => {
-        console.log(additionalNumberBlock.style.top);
         if (additionalNumberBlock.style.top === '0px') {
             animation({
                 duration: 100,
