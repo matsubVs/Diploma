@@ -8,25 +8,42 @@ const sendForm = () => {
             popupPrivacy = document.querySelector('.popup-privacy'),
             sendButton = form.querySelector('.button'),
             checkBox = form.querySelector('.checkbox__input'),
-            userInputs = [...form.querySelectorAll('input')].filter(item => item.type !== 'checkbox');
+            userInputs = [...form.querySelectorAll('input')].filter(item => item.type !== 'checkbox'),
+            nameFileds = [...form.querySelectorAll('input[name=name]')];
+            
+        for (const name of nameFileds) {
+            name.addEventListener('input', event => {
+                event.target.value = event.target.value.replace(/[^а-яё ]/ig, '');
+            });
+        }
 
         const checkBoxValidation = checkbox => {
             if (checkbox.checked) return true;
-            else return false;
+            else {
+                const label = checkbox.nextElementSibling;
+                label.style.border = '1px solid red';
+                setTimeout(() => label.style.border = '', 1000);
+                return false;
+            }
         };
 
         const checkForms = (inputs = []) => {
-            console.log(inputs);
             if (inputs.length === 2) {
-                if (inputs[0].value !== '' && inputs[1].value.length === 18) {
+                if (inputs[0].value.length >= 2 && inputs[1].value.length === 18) {
                     return true;
                 } else {
+                    inputs[0].style.border = '1px solid red';
+                    inputs[1].style.border = '1px solid red';
+                    setTimeout(() => inputs[0].style.border = '', 1000);
+                    setTimeout(() => inputs[1].style.border = '', 1000);
                     return false;
                 }
             } else {
                 if (inputs[0].value.length === 18) {
                     return true;
                 } else {
+                    inputs[0].style.border = '1px solid red';
+                    setTimeout(() => inputs[0].style.border = '', 1000);
                     return false;
                 }
             }
@@ -80,6 +97,8 @@ const sendForm = () => {
                     }, 2000); 
 
                     setTimeout(() => popupThank.style.visibility = 'hidden', 2500);
+                    userInputs.forEach(item => item.value = '');
+                    checkBox.checked = false;
                 })
                 .catch(error => {
                     console.error(error);
@@ -94,18 +113,12 @@ const sendForm = () => {
                 sendRequest(userInputs);
                 
             } else {
-                console.warn('warn');
+                console.log('here');
             }
         });
 
         descrBlock.addEventListener('click', () => {
             popupPrivacy.style.visibility = 'visible';
-
-            popupPrivacy.addEventListener('click', event => {
-                if (event.target.matches('.close')) {
-                    popupPrivacy.style.visibility = 'hidden';
-                }
-            });
         });
     }
 };
