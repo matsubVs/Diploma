@@ -6,7 +6,7 @@ import sendForm from './modules/sendForm';
 import consultations from './modules/consultaions';
 import closePopups from './modules/closePopups';
 import faq from './modules/faq';
-import advantagesHints from './modules/advantagesHints';
+import hintsDesktop from './modules/hintsDesktop';
 
 closePopups();
 additionalNumber();
@@ -16,4 +16,4 @@ phoneMask();
 sendForm();
 consultations();
 faq();
-advantagesHints();
+hintsDesktop();
