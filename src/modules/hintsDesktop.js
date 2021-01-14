@@ -32,7 +32,6 @@ const hintsDesktop = () => {
                         }
                     `;
                     document.head.appendChild(style);
-                    console.log('here');
                 }
                 
                 if (className !== 'problems') {
@@ -77,7 +76,6 @@ const hintsDesktop = () => {
             fillItem.style.opacity = 0;
 
             if (itemStyle) {
-                console.log('here');
                 setTimeout(() => {
                     itemStyle.textContent = '';
                     itemPopup.style.transform = '';
