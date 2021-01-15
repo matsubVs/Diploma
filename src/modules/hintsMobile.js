@@ -4,17 +4,17 @@ const hintsMobile = () => {
     const activeFormulaPopup = (event, item) => {
         const target = event.target;
         const itemParentClass = item.split('-')[0];
-        if (target.closest(`${itemParentClass}-item`)) {
+        if (target.closest(`${itemParentClass}-item, ${itemParentClass}-item__icon`)) {
             let item;
-            if (target.closest(`${itemParentClass}-item__icon`)) {
-                item = target.closest(`${itemParentClass}-item__icon`);
-            } else {
+            if (!target.closest(`${itemParentClass}-item__icon`)) {
                 item = target.closest(`${itemParentClass}-item`);
+            } else {
+                item = target.closest(`${itemParentClass}-item__icon`);
             }
             const popup = item.querySelector(`${itemParentClass}-item-popup`);
             const type = event.type;
 
-            if (type === 'mouseenter') {
+            if (type === 'mouseover') {
                 popup.style.visibility = 'visible';
                 animation({
                     duration: 300,
@@ -34,7 +34,7 @@ const hintsMobile = () => {
                         popup.style.opacity = progress;
                     }
                 });
-            } else if (type === 'mouseleave') {
+            } else {
                 animation({
                     duration: 300,
                     timing(timeFraction) {
@@ -61,8 +61,8 @@ const hintsMobile = () => {
     const hintsMobile = ['.formula-slider', '.problems-slider'];
     hintsMobile.forEach(item => {
         const slider = document.querySelector(item);
-        slider.addEventListener('mouseenter', event => activeFormulaPopup(event, item));
-        slider.addEventListener('mouseleave', event => activeFormulaPopup(event, item));
+        slider.addEventListener('mouseover', event => activeFormulaPopup(event, item));
+        slider.addEventListener('mouseout', event => activeFormulaPopup(event, item));
     
     });
 

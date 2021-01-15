@@ -76,7 +76,7 @@ const staticSlider = () => {
                 [...this.slides].forEach((item, index) => {
                     if (index === this.options.position) {
                         animation({
-                            duration: 200,
+                            duration: 1000,
                             timing(timeFraction) {
                                 return timeFraction;
                             },
@@ -181,7 +181,8 @@ const staticSlider = () => {
             next: '#reviews-arrow_right',
             prev: '#reviews-arrow_left',
             slidesToShow: 1,
-            hide: true
+            hide: true,
+            hideButtons: true
         }
     );
 

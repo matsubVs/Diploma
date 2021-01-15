@@ -1,14 +1,9 @@
-// repair-types-slider -> repait-types
-// design-slider -> design
-// scheme-slider -> scheme
-
 const dynamicSlider = () => {
     const sliders = ['.repair-types', '.designs', '.scheme', '.popup-design', '.popup-portfolio', 
         '.popup-transparency'];
     for (const elem of sliders) {
         const main = document.querySelector(`${elem}`),
             mainSlider = main.querySelector(`${elem}-slider`),
-            // navItems = [...main.querySelectorAll(`${elem}-nav__item`)],
             navItems = [...main.querySelectorAll(`.button_o`)],
             mainSliderItems = [...mainSlider.children], // <--- slider which correlate with active tabs
             sliderItemImgs = [], // <--- imgs inside active slider
