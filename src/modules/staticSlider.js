@@ -299,17 +299,11 @@ const staticSlider = () => {
     }
 
     const navLists = [...document.querySelectorAll('.nav-wrap')];
-    console.log(navLists);
     navLists.forEach(item => {
         const main = item.classList[1];
         const wrap = item.querySelector('.nav-list').classList[1];
         const next = item.querySelector('.nav-arrow_right').id;
         const prev = item.querySelector('.nav-arrow_left').id;
-
-        console.log(main);
-        console.log(wrap);
-        console.log(next);
-        console.log(prev);
 
         if (main === 'nav-wrap-repair') {
             if (document.querySelector(`.${main}`).closest('.popup-dialog')) {
@@ -340,8 +334,6 @@ const staticSlider = () => {
         });
 
         slider.init();
-
-        console.log(slider);
     });
 
     const problemsWrapper = document.querySelector('.problems-slider-wrap');
