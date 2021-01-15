@@ -1041,8 +1041,10 @@ template {
 }
 
 .formula-slider {
+    position: relative;
     min-height: 400px;
-    margin-top: 102px
+    margin-top: 102px;
+    bottom: -20%;
 }
 
 .formula-slider__slide {
@@ -1064,7 +1066,7 @@ template {
 }
 
 .formula-slider__slide .formula-item {
-    width: 100%
+    width: 260px;
 }
 
 .formula-slider__slide .formula-item__descr {
@@ -1088,6 +1090,13 @@ template {
 
 .formula-slider__slide .formula-item__icon__descr {
     font-size: 18px
+}
+
+@media (max-width:1024px) {
+    .formula-slider {
+        position: relative;
+        margin-bottom: 20%;
+    }
 }
 
 @media (max-width:575px) {
@@ -2337,19 +2346,15 @@ div.wave-block:nth-child(17):after {
 }
 
 @media (max-width:1090px) {
-    .transparency-slider.row {
-        display: block
-    }
-
     .transparency-item {
         margin-left: auto;
-        margin-right: auto
+        margin-right: 200px !important;
     }
 }
 
 @media (max-width:1024px) {
     .transparency-item {
-        width: auto
+        width: auto;
     }
 }
 
@@ -2409,7 +2414,7 @@ div.wave-block:nth-child(17):after {
     padding-bottom: 5px
 }
 
-@media (min-width:1091px) {
+@media (min-width:1024px) {
     .transparency-item__img:hover .item-hover {
         visibility: visible;
         opacity: 1;
@@ -2670,7 +2675,7 @@ div.wave-block:nth-child(17):after {
 }
 
 .problems-slider-wrap {
-    margin-top: 70px
+    margin-top: -125px
 }
 
 @media (max-width:575px) {
@@ -8100,11 +8105,11 @@ div.wave-block:nth-child(17):after {
 }
 
 #formula-arrow_left {
-    left: -17px
+    left: 35px
 }
 
 #formula-arrow_right {
-    right: -24px
+    right: 30px
 }
 
 @media (max-width:864px) {

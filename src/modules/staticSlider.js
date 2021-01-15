@@ -1,9 +1,9 @@
 import animation from './animation';
 
-const sliderWithoutTabs = () => {
+const staticSlider = () => {
     class SliderCarousel {
         constructor({ main, wrap, next, prev, position = 0, slidesToShow = 3, infinity = false, responsive = [], 
-            hide = false, hideButtons = false }) {
+            hide = false, hideButtons = false, divideBy = 1 }) {
             this.main = document.querySelector(main);
             this.wrap = document.querySelector(wrap);
             this.slides = document.querySelector(wrap).children;
@@ -13,6 +13,7 @@ const sliderWithoutTabs = () => {
             this.responsive = responsive;
             this.options = {
                 position,
+                divideBy,
                 infinity,
                 hideButtons,
                 widthSlide: Math.floor(100 / this.slidesToShow),
@@ -120,7 +121,8 @@ const sliderWithoutTabs = () => {
                     this.options.position = this.slides.length - this.slidesToShow;
                     this.hideSlider();
                 }
-                this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`;
+                this.wrap.style.transform = 
+                `translateX(-${(this.options.position * this.options.widthSlide) / this.options.divideBy}%)`;
             }
         }
     
@@ -135,7 +137,8 @@ const sliderWithoutTabs = () => {
                     this.options.position = 0;
                     this.hideSlider();
                 }
-                this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`;
+                this.wrap.style.transform = 
+                `translateX(-${(this.options.position * this.options.widthSlide) / this.options.divideBy}%)`;
             }
         }
     
@@ -212,15 +215,57 @@ const sliderWithoutTabs = () => {
             next: '#transparency-arrow_right',
             prev: '#transparency-arrow_left',
             hideButtons: true,
+            divideBy: 2,
             slidesToShow: 3,
             responsive: [{
-                breakpoint: 1090,
+                breakpoint: 1024,
                 slidesToShow: 1
             }]
         }
     );
 
     documents.init();
+
+    const problems = new SliderCarousel(
+        {
+            main: '.problems-slider-wrap',
+            wrap: '.problems-slider',
+            next: '#problems-arrow_right',
+            prev: '#problems-arrow_left',
+            hideButtons: true,
+            slidesToShow: 1,
+            divideBy: 3,
+        }
+    );
+
+    problems.init();
+
+    const formula = new SliderCarousel(
+        {
+            main: '.formula-slider-wrap',
+            wrap: '.formula-slider',
+            next: '#formula-arrow_right',
+            prev: '#formula-arrow_left',
+            hideButtons: true,
+            slidesToShow: 3,
+            responsive: [{
+                breakpoint: 768,
+                slidesToShow: 2
+            },  
+            {
+                breakpoint: 575,
+                slidesToShow: 1
+            }]
+        }
+    );
+
+    formula.init();
+
+    const problemsWrapper = document.querySelector('.problems-slider-wrap');
+    problemsWrapper.classList.remove('glo-slider');
+
+    const formulaWrapper = document.querySelector('.formula-slider-wrap');
+    formulaWrapper.classList.remove('glo-slider');
 };  
 
-export default sliderWithoutTabs;
+export default staticSlider;

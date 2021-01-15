@@ -2,7 +2,7 @@
 // design-slider -> design
 // scheme-slider -> scheme
 
-const sliderWTabs = () => {
+const dynamicSlider = () => {
     const sliders = ['.repair-types', '.designs', '.scheme', '.popup-design', '.popup-portfolio', 
         '.popup-transparency'];
     for (const elem of sliders) {
@@ -197,4 +197,4 @@ const sliderWTabs = () => {
     });
 };
 
-export default sliderWTabs;
+export default dynamicSlider;
