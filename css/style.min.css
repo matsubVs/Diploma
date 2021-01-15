@@ -7107,7 +7107,8 @@ div.wave-block:nth-child(17):after {
     margin: 77px auto 0;
     position: relative;
     overflow: hidden;
-    max-width: 100%
+    max-width: 100%;
+    bottom: 20px
 }
 
 @media (max-width:575px) {
@@ -7259,7 +7260,7 @@ div.wave-block:nth-child(17):after {
 
 .nav-wrap {
     position: relative;
-    padding: 0 17px
+    padding: 0 17px;
 }
 
 .nav-wrap-popup {

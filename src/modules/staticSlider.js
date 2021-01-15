@@ -261,6 +261,89 @@ const staticSlider = () => {
 
     formula.init();
 
+    class CustomCarousel extends SliderCarousel {
+        addStyle() {
+            let style = document.getElementById('customCarousel-style');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'CustomCarousel-style';
+            }
+            
+            style.textContent = `
+                .custom-slider {
+                    overflow: hidden !important;
+                }
+                .custom-slider__wrap {
+                    display: flex !important;
+                    flex-wrap: nowrap !important;
+                    transition: transform 0.5s !important;
+                    will-change: transform !important;
+                    overflow: visible !important;
+                }
+    
+                .custom-slider__item {
+                    // flex: 0 0 ${this.options.widthSlide}% !important;
+                    margin: auto 0 !important;
+                    margin-right: ${10 * this.slidesToShow}px !important;
+                }
+            `;
+    
+            document.head.appendChild(style);
+        }
+
+        addGloClass() {
+            this.main.classList.add('custom-slider');
+            this.wrap.classList.add('custom-slider__wrap');
+            for (const slide of this.slides) slide.classList.add('custom-slider__item');
+        }
+    }
+
+    const navLists = [...document.querySelectorAll('.nav-wrap')];
+    console.log(navLists);
+    navLists.forEach(item => {
+        const main = item.classList[1];
+        const wrap = item.querySelector('.nav-list').classList[1];
+        const next = item.querySelector('.nav-arrow_right').id;
+        const prev = item.querySelector('.nav-arrow_left').id;
+
+        console.log(main);
+        console.log(wrap);
+        console.log(next);
+        console.log(prev);
+
+        if (main === 'nav-wrap-repair') {
+            if (document.querySelector(`.${main}`).closest('.popup-dialog')) {
+                return;
+            }
+            window.addEventListener('resize', () => {
+                if (document.documentElement.clientWidth <= 1024) {
+                    const slider = new CustomCarousel({
+                        main: `.${main}`,
+                        wrap: `.${wrap}`,
+                        next: `#${next}`,
+                        prev: `#${prev}`,
+                        slidesToShow: 3
+                    });
+
+                    slider.init();
+                }
+            });
+            return;
+        }
+
+        const slider = new CustomCarousel({
+            main: `.${main}`,
+            wrap: `.${wrap}`,
+            next: `#${next}`,
+            prev: `#${prev}`,
+            slidesToShow: 3
+        });
+
+        slider.init();
+
+        console.log(slider);
+    });
+
     const problemsWrapper = document.querySelector('.problems-slider-wrap');
     problemsWrapper.classList.remove('glo-slider');
 
