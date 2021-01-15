@@ -68,7 +68,7 @@ const hintsDesktop = () => {
             return;
         }
         const target = event.target;
-        if (target.closest(`.${className}-item__icon, .svg-wrap`)) {
+        if (target.closest(`.svg-wrap, .${className}-item__icon`)) {
             const mainItem = target.closest(`.${className}-item__icon`),
                 fillItem = mainItem.querySelector(`.${className}-item__icon-inner`),
                 innerText = mainItem.querySelector(`.${className}-item__icon-inner-text`),

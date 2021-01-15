@@ -110,10 +110,7 @@ const sendForm = () => {
             event.preventDefault();
 
             if (checkBoxValidation(checkBox) && checkForms(userInputs)) {
-                sendRequest(userInputs);
-                
-            } else {
-                console.log('here');
+                sendRequest(userInputs);   
             }
         });
 

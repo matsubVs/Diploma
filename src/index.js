@@ -8,6 +8,8 @@ import closePopups from './modules/closePopups';
 import faq from './modules/faq';
 import hintsDesktop from './modules/hintsDesktop';
 import hintsMobile from './modules/hintsMobile';
+import sliderWTabs from './modules/sliderWTabs';
+import sliderWithoutTabs from './modules/sliderWithoutTabs';
 
 closePopups();
 additionalNumber();
@@ -19,3 +21,5 @@ consultations();
 faq();
 hintsDesktop();
 hintsMobile();
+sliderWTabs();
+sliderWithoutTabs();

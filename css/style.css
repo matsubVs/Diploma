@@ -6481,3 +6481,11 @@ strong {
 
 .slider-dots {
   display: none; }
+
+.slider-active {
+  display: block !important;
+}
+
+.slider-disabled {
+  display: none !important;
+}
