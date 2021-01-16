@@ -29,6 +29,7 @@ const allServicesPopup = () => {
             }
         });
 
+        buttonList[0].click();
     };
 
     const getMonth = monthInt => {

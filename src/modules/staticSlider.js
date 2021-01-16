@@ -14,7 +14,6 @@ const staticSlider = () => {
             this.options = {
                 position,
                 divideBy,
-                multiplyBy,
                 infinity,
                 hideButtons,
                 widthSlide: Math.floor(100 / this.slidesToShow),
@@ -76,7 +75,7 @@ const staticSlider = () => {
                 [...this.slides].forEach((item, index) => {
                     if (index === this.options.position) {
                         animation({
-                            duration: 1000,
+                            duration: 100,
                             timing(timeFraction) {
                                 return timeFraction;
                             },
@@ -121,8 +120,13 @@ const staticSlider = () => {
                     this.options.position = this.slides.length - this.slidesToShow;
                     this.hideSlider();
                 }
+
+                if (this.options.multiplyBy === undefined) {
+                    this.options.multiplyBy = 1;
+                }
                 this.wrap.style.transform = 
-                `translateX(-${(this.options.position * this.options.widthSlide) / this.options.divideBy}%)`;
+                `translateX(-${((this.options.position * this.options.widthSlide) / this.options.divideBy) * 
+                    this.options.multiplyBy}%)`;
             }
         }
     
@@ -137,6 +141,11 @@ const staticSlider = () => {
                     this.options.position = 0;
                     this.hideSlider();
                 }
+                if (this.options.multiplyBy === undefined) {
+                    this.options.multiplyBy = 1;
+                }
+                console.log(this.slidesToShow);
+
                 this.wrap.style.transform = 
                 `translateX(-${((this.options.position * this.options.widthSlide) / this.options.divideBy) * 
                     this.options.multiplyBy}%)`;
@@ -150,7 +159,7 @@ const staticSlider = () => {
         
         responseInit() {
             const slidesToShowDefault = this.slidesToShow;
-            const multy = this.responsive.map(item => item.multiplyBy);
+            const multy = this.responsive.map(item => item.multiplyBy).filter(item => item);
             const allResponse = this.responsive.map(item => item.breakpoint);
             const maxResponse = Math.max(...allResponse);
 
@@ -159,7 +168,7 @@ const staticSlider = () => {
                 const widthWindow = document.documentElement.clientWidth;
                 if (widthWindow < maxResponse) {
                     for (let i = 0; i < allResponse.length; i++) {
-                        if (multy && widthWindow) {
+                        if (multy) {
                             this.options.multiplyBy = multy[i];
                         }
                         if (widthWindow < allResponse[i]) {
@@ -188,7 +197,18 @@ const staticSlider = () => {
             prev: '#reviews-arrow_left',
             slidesToShow: 1,
             hide: true,
-            hideButtons: true
+            hideButtons: true,
+            responsive: [
+                {
+                    breakpoint: 600,
+                    slidesToShow: 1,
+                    multiplyBy: 1
+                },
+                {
+                    breakpoint: 576,
+                    slidesToShow: 1,
+                    multiplyBy: 0.5
+                }]
         }
     );
 
@@ -203,11 +223,19 @@ const staticSlider = () => {
             slidesToShow: 3,
             responsive: [{
                 breakpoint: 1024,
-                slidesToShow: 2
+                slidesToShow: 2,
+                multiplyBy: 1
+            }, 
+            {
+                breakpoint: 579,
+                slidesToShow: 2,
+                multiplyBy: 1
+
             },
             {
-                breakpoint: 575,
-                slidesToShow: 1
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 0.8
             }
             ]
         }
@@ -226,7 +254,18 @@ const staticSlider = () => {
             slidesToShow: 3,
             responsive: [{
                 breakpoint: 1024,
-                slidesToShow: 1
+                slidesToShow: 1,
+                multiplyBy: 1,
+            },
+            {
+                breakpoint: 690,
+                slidesToShow: 1,
+                multiplyBy: 1.2,
+            },
+            {
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 1.7,
             }]
         }
     );
@@ -242,6 +281,11 @@ const staticSlider = () => {
             hideButtons: true,
             slidesToShow: 1,
             divideBy: 3,
+            responsive: [{
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 3
+            }]
         }
     );
 
@@ -350,20 +394,27 @@ const staticSlider = () => {
         prev: '#portfolio-arrow_left',
         slidesToShow: 3,
         hideButtons: true,
-        multiplyBy: 1.5,
+        multiplyBy: 1.2,
         responsive: [{
             breakpoint: 1024,
             slidesToShow: 3,
-            multiplyBy: 2.5
+            multiplyBy: 1.4
         },
         {
             breakpoint: 900,
-            slidesToShow: 3,
-            multiplyBy: 5
+            slidesToShow: 2,
+            multiplyBy: 2.2
         }]
     });
 
     portfolio.init();
+
+    window.addEventListener('resize', () => {
+        if (document.documentElement.clientWidth < 578) {
+            document.querySelector('.portfolio-slider').classList.remove('glo-slider__wrap');
+            document.querySelector('.portfolio-slider-wrap').classList.remove('glo-slider');
+        }
+    });
 
     const problemsWrapper = document.querySelector('.problems-slider-wrap');
     problemsWrapper.classList.remove('glo-slider');
