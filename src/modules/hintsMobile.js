@@ -2,7 +2,6 @@ import animation from './animation';
 
 const hintsMobile = () => {
     const over = (event, className) => {
-        console.log(event.target);
         const popup = event.target.querySelector(`${className}-popup`);
         const item = event.target.closest(className);
         popup.style.visibility = 'visible';
@@ -72,7 +71,6 @@ const hintsMobile = () => {
     formulaItems.forEach(item => {
         item.addEventListener('mouseenter', event => {
             over(event, '.formula-item');
-            console.log('here');
         });
         item.addEventListener('mouseleave', event => out(event, '.formula-item'));
     });

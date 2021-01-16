@@ -48,7 +48,7 @@ const hintsDesktop = () => {
         fillItem.style.opacity = 1;
 
         animation({
-            duration: 400,
+            duration: 100,
             timing(timeFraction) {
                 return timeFraction;
             },
@@ -70,7 +70,7 @@ const hintsDesktop = () => {
             itemPopup = mainItem.querySelector(`${className}-popup`),
             itemStyle = document.head.querySelector(`#${itemPopup.classList[1]}`),
             rowBlock = mainItem.closest('.row');
-        
+
         if (className !== '.problems-item') {
             innerText.style.color = 'black';
         }
@@ -80,11 +80,11 @@ const hintsDesktop = () => {
             setTimeout(() => {
                 itemStyle.textContent = '';
                 itemPopup.style.transform = '';
-            }, 500);
+            }, 200);
         }
 
         animation({
-            duration: 200,
+            duration: 100,
             timing(timeFraction) {
                 return timeFraction;
             },
@@ -97,7 +97,7 @@ const hintsDesktop = () => {
             itemPopup.style.paddingTop = '';
             itemPopup.style.visibility = 'hidden';
             rowBlock.style.zIndex = 0;
-        }, 500);
+        }, 200);
     };
 
     const problemsItems = document.querySelectorAll('.problems-item__icon');
