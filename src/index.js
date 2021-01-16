@@ -10,6 +10,7 @@ import hintsDesktop from './modules/hintsDesktop';
 import hintsMobile from './modules/hintsMobile';
 import dynamicSlider from './modules/dynamicSlider';
 import staticSlider from './modules/staticSlider';
+import swapInterior from './modules/swapInterior';
 
 closePopups();
 additionalNumber();
@@ -23,3 +24,4 @@ hintsDesktop();
 hintsMobile();
 dynamicSlider();
 staticSlider();
+swapInterior();

@@ -4,7 +4,8 @@ const hintsMobile = () => {
     const activeFormulaPopup = (event, item) => {
         const target = event.target;
         const itemParentClass = item.split('-')[0];
-        if (target.closest(`${itemParentClass}-item, ${itemParentClass}-item__icon`)) {
+        if (target.closest(`${itemParentClass}-item, ${itemParentClass}-item__icon`) && 
+            !target.closest(`.formula-item-popup, .problems-item-popup`)) {
             let item;
             if (!target.closest(`${itemParentClass}-item__icon`)) {
                 item = target.closest(`${itemParentClass}-item`);

@@ -3,7 +3,7 @@ import animation from './animation';
 const staticSlider = () => {
     class SliderCarousel {
         constructor({ main, wrap, next, prev, position = 0, slidesToShow = 3, infinity = false, responsive = [], 
-            hide = false, hideButtons = false, divideBy = 1 }) {
+            hide = false, hideButtons = false, divideBy = 1, multiplyBy = 1 }) {
             this.main = document.querySelector(main);
             this.wrap = document.querySelector(wrap);
             this.slides = document.querySelector(wrap).children;
@@ -14,6 +14,7 @@ const staticSlider = () => {
             this.options = {
                 position,
                 divideBy,
+                multiplyBy,
                 infinity,
                 hideButtons,
                 widthSlide: Math.floor(100 / this.slidesToShow),
@@ -27,7 +28,6 @@ const staticSlider = () => {
     
             if (this.next && this.prev) this.controlSlider();
             else {
-                this.addArrow();
                 this.controlSlider();
             }
             if (this.responsive) {
@@ -138,7 +138,8 @@ const staticSlider = () => {
                     this.hideSlider();
                 }
                 this.wrap.style.transform = 
-                `translateX(-${(this.options.position * this.options.widthSlide) / this.options.divideBy}%)`;
+                `translateX(-${((this.options.position * this.options.widthSlide) / this.options.divideBy) * 
+                    this.options.multiplyBy}%)`;
             }
         }
     
@@ -149,13 +150,18 @@ const staticSlider = () => {
         
         responseInit() {
             const slidesToShowDefault = this.slidesToShow;
+            const multy = this.responsive.map(item => item.multiplyBy);
             const allResponse = this.responsive.map(item => item.breakpoint);
             const maxResponse = Math.max(...allResponse);
+
     
             const checkResponse = () => {
                 const widthWindow = document.documentElement.clientWidth;
                 if (widthWindow < maxResponse) {
                     for (let i = 0; i < allResponse.length; i++) {
+                        if (multy && widthWindow) {
+                            this.options.multiplyBy = multy[i];
+                        }
                         if (widthWindow < allResponse[i]) {
                             this.slidesToShow = this.responsive[i].slidesToShow;
                             this.options.widthSlide = Math.floor(100 / this.slidesToShow);
@@ -336,6 +342,28 @@ const staticSlider = () => {
 
         slider.init();
     });
+
+    const portfolio = new SliderCarousel({
+        main: '.portfolio-slider-wrap',
+        wrap: '.portfolio-slider',
+        next: '#portfolio-arrow_right',
+        prev: '#portfolio-arrow_left',
+        slidesToShow: 3,
+        hideButtons: true,
+        multiplyBy: 1.5,
+        responsive: [{
+            breakpoint: 1024,
+            slidesToShow: 3,
+            multiplyBy: 2.5
+        },
+        {
+            breakpoint: 900,
+            slidesToShow: 3,
+            multiplyBy: 5
+        }]
+    });
+
+    portfolio.init();
 
     const problemsWrapper = document.querySelector('.problems-slider-wrap');
     problemsWrapper.classList.remove('glo-slider');

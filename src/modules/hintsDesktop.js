@@ -9,8 +9,10 @@ const hintsDesktop = () => {
         if (document.documentElement.clientWidth <= 1024) {
             return;
         }
+        // formula-item-popup 
         const target = event.target;
-        if (target.closest(`.${className}-item__icon, .svg-wrap`)) {
+        if (target.closest(`.${className}-item__icon, .svg-wrap`) && 
+            !target.closest(`.formula-item-popup, .problems-item-popup`)) {
             const mainItem = target.closest(`.${className}-item__icon`),
                 fillItem = mainItem.querySelector(`.${className}-item__icon-inner`),
                 innerText = mainItem.querySelector(`.${className}-item__icon-inner-text`),

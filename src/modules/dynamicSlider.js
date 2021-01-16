@@ -1,10 +1,15 @@
 const dynamicSlider = () => {
     const sliders = ['.repair-types', '.designs', '.scheme', '.popup-design', '.popup-portfolio', 
-        '.popup-transparency'];
+        '.popup-transparency', '.portfolio'];
     for (const elem of sliders) {
-        const main = document.querySelector(`${elem}`),
-            mainSlider = main.querySelector(`${elem}-slider`),
-            navItems = [...main.querySelectorAll(`.button_o`)],
+        const main = document.querySelector(`${elem}`);
+        let mainSlider;
+        if (elem === '.portfolio') {
+            mainSlider = main.querySelector(`${elem}-slider-mobile`);
+        } else {
+            mainSlider = main.querySelector(`${elem}-slider`);
+        }
+        const navItems = [...main.querySelectorAll(`.button_o`)],
             mainSliderItems = [...mainSlider.children], // <--- slider which correlate with active tabs
             sliderItemImgs = [], // <--- imgs inside active slider
             sliderCurrent = main.querySelector('.slider-counter-content__current'),
@@ -27,26 +32,37 @@ const dynamicSlider = () => {
             if (elem === '.scheme') {
                 schemeBlocks = [...main.querySelectorAll('.scheme-description-block')];
             }
+            let portfolioBlocks;
+            if (elem === '.popup-portfolio') {
+                portfolioBlocks = [...main.querySelectorAll('.popup-portfolio-text')];
+            }
 
             mainSliderItems.forEach((item, index) => {
                 if (index === indexSlider) {
                     item.style.display = 'block';
-                    if (sliderTotal) {
+                    if (sliderTotal && elem !== '.popup-portfolio') {
                         sliderTotal.textContent = [...item.children].length;
                     }
                     if (textBlocks) textBlocks[index].classList.add('visible-content-block');
                     if (previewBlocks) previewBlocks[index].classList.add('visible');
                     if (schemeBlocks) schemeBlocks[index].classList.add('visible-content-block');
+                    if (portfolioBlocks) portfolioBlocks[index].classList.add('visible-content-block');
                 } else {
                     item.style.display = 'none';
                     if (textBlocks) textBlocks[index].classList.remove('visible-content-block');
                     if (previewBlocks) previewBlocks[index].classList.remove('visible');
                     if (schemeBlocks) schemeBlocks[index].classList.remove('visible-content-block');
+                    if (portfolioBlocks) portfolioBlocks[index].classList.remove('visible-content-block');
                 }
             });
         };
 
         const findSlider = () => {
+            if (mainSliderItems[0].classList.contains('portfolio-slider__slide-frame')) {
+                return mainSliderItems;
+            } else if (mainSliderItems[0].classList.contains('popup-portfolio-slider__slide')) {
+                return mainSliderItems;
+            }
             const slider = mainSliderItems.filter(item => {
                 if (item.style.display === 'block') return true;
             });
@@ -58,13 +74,24 @@ const dynamicSlider = () => {
             if (elem === '.scheme') {
                 return;
             }
-
             const slider = findSlider();
-            const current = [...slider.children][+sliderCurrent.textContent - 1];
-            const previous = [...slider.children][+sliderCurrent.textContent - 2];
 
+            let current;
+            let previous;
+            let sliderLength;
+
+            if (elem === '.portfolio' || elem === '.popup-portfolio') {
+                current = slider[+sliderCurrent.textContent - 1];
+                previous = slider[+sliderCurrent.textContent - 2];
+                sliderLength = slider.length;
+            } else {
+                current = [...slider.children][+sliderCurrent.textContent - 1];
+                previous = [...slider.children][+sliderCurrent.textContent - 2];
+                sliderLength = [...slider.children].length;    
+            }
+            
             if (next === true) {
-                if (+sliderCurrent.textContent < [...slider.children].length) {
+                if (+sliderCurrent.textContent < sliderLength) {
                     current.classList.add('slider-disabled');
                     current.classList.remove('slider-active');
                     current.nextElementSibling.classList.add('slider-active');
@@ -82,9 +109,13 @@ const dynamicSlider = () => {
             }
         };
 
+        if (elem === '.popup-portfolio') {
+            dispalySlider(+sliderCurrent.textContent - 1);
+        }
+
         main.addEventListener('click', event => {
             const target = event.target;
-
+            
             if (target.matches('.button_o')) {
                 navItems.forEach(item => {
                     if (item === target) {
@@ -120,6 +151,13 @@ const dynamicSlider = () => {
                 } else if (arrow.classList.contains('slider-arrow_left')) {
                     switchSlider(false, true);
                 }
+            } else if (target.closest('.portfolio-arrow-mobile')) {
+                const arrow = target.closest('.portfolio-arrow-mobile');
+                if (arrow.matches('#portfolio-arrow-mobile_right')) {
+                    switchSlider(true, false);
+                } else if (arrow.matches('#portfolio-arrow-mobile_left')) {
+                    switchSlider(false, true);
+                }
             } else if (target.closest('.slider-arrow-tablet-mobile')) {
                 const arrow = target.closest('.slider-arrow-tablet-mobile');
                 if (arrow.matches('#design_right')) {
@@ -134,6 +172,15 @@ const dynamicSlider = () => {
                 } else if (arrow.matches('#popup_design_left')) {
                     switchSlider(false, true);
                 }
+            }  else if (target.closest('.popup-arrow') && target.closest('.popup-portfolio')) {
+                const arrow = target.closest('.popup-arrow');
+                if (arrow.matches('#popup_portfolio_right')) {
+                    switchSlider(true, false);
+                    dispalySlider(+sliderCurrent.textContent - 1);
+                } else if (arrow.matches('#popup_portfolio_left')) {
+                    switchSlider(false, true);
+                    dispalySlider(+sliderCurrent.textContent - 1);
+                } 
             } else if (target.closest('.popup-arrow_transparency')) {
                 const arrow = target.closest('.popup-arrow');
 
@@ -151,12 +198,32 @@ const dynamicSlider = () => {
             } else {
                 item.style.display = 'none';
             }
-            sliderItemImgs.push([...item.children]);
+            if (elem === '.portfolio') {
+                sliderItemImgs.push([...item.children][0]);
+            } else {
+                sliderItemImgs.push([...item.children]);
+            }
         });
         if (sliderTotal !== null) {
-            sliderTotal.textContent = sliderItemImgs[0].length;
+            if (elem === '.portfolio' || elem === '.popup-portfolio') {
+                sliderTotal.textContent = sliderItemImgs.length;
+            } else {
+                sliderTotal.textContent = sliderItemImgs[0].length;
+            }
         }
     }
+
+    const popupProfile = document.querySelector('.popup-portfolio');
+    const portfolio = document.querySelector('.portfolio');
+
+    portfolio.addEventListener('click', event => {
+        const target = event.target;
+
+        if (target.matches('.portfolio-slider__slide-frame')) {
+            popupProfile.style.visibility = 'visible';
+        }
+    });
+
 
     const popupDesign = document.querySelector('.popup-design');
     const designLink = document.querySelector('.link-list-designs');
