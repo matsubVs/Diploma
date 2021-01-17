@@ -360,8 +360,6 @@ const staticSlider = () => {
         }]
     });
 
-    navListRepair.init();
-
     const navListDesigns = new CustomCarousel({
         main: `.nav-wrap-designs`,
         wrap: `.nav-list-designs`,
@@ -416,8 +414,6 @@ const staticSlider = () => {
         }]
     });
 
-    navListRepairPopup.init();
-
     const navListScheme = new CustomCarousel(
         { main: '.nav-wrap-scheme ',
             wrap: '.nav-list-scheme',
@@ -463,6 +459,23 @@ const staticSlider = () => {
 
     portfolio.init();
 
+    let flag = false;
+    const initTabs = () => {
+        if (document.documentElement.clientWidth < 1024) {
+            navListRepair.init();
+            navListRepairPopup.init();
+            flag = true;
+            // window.removeEventListener('resize', () => initTabs);
+        }
+        
+    };
+
+    window.addEventListener('resize', () => {
+        if (!flag) {
+            initTabs();
+        }
+    });
+
     window.addEventListener('resize', () => {
         if (document.documentElement.clientWidth < 578) {
             document.querySelector('.portfolio-slider').classList.remove('glo-slider__wrap');
@@ -475,6 +488,6 @@ const staticSlider = () => {
 
     const formulaWrapper = document.querySelector('.formula-slider-wrap');
     formulaWrapper.classList.remove('glo-slider');
-};  
+};
 
 export default staticSlider;
