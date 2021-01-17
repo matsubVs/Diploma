@@ -22,7 +22,6 @@ const hintsMobile = () => {
     const nextItem = items => {
         const currentItem = formulaItems.filter(item => item.classList.contains('active-item'));
         const currentIndex = formulaItems.indexOf(currentItem[0]);
-        console.log(currentIndex);
         if (currentIndex + 2 === formulaItems.length) {
             items[currentIndex + 1].style.display = 'none';
             items[currentIndex].classList.remove('active-item');

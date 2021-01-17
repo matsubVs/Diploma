@@ -465,7 +465,6 @@ const staticSlider = () => {
             navListRepair.init();
             navListRepairPopup.init();
             flag = true;
-            // window.removeEventListener('resize', () => initTabs);
         }
         
     };
