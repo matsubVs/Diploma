@@ -99,10 +99,6 @@ const sendForm = () => {
                     setTimeout(() => popupThank.style.visibility = 'hidden', 2500);
                     userInputs.forEach(item => item.value = '');
                     checkBox.checked = false;
-                })
-                .catch(error => {
-                    console.error(error);
-                    return;
                 });
         };
 
