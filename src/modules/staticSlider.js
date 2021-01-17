@@ -418,6 +418,24 @@ const staticSlider = () => {
 
     navListRepairPopup.init();
 
+    const navListScheme = new CustomCarousel(
+        { main: '.nav-wrap-scheme ',
+            wrap: '.nav-list-scheme',
+            next: '#nav-arrow-scheme_right',
+            prev: '#nav-arrow-scheme_left',
+            slidesToShow: 3,
+            multiplyBy: 1,
+            hideButtons: true,
+            responsive: [{
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 0.2
+            }]
+        }
+    );
+
+    navListScheme.init();
+
     const portfolio = new SliderCarousel({
         main: '.portfolio-slider-wrap',
         wrap: '.portfolio-slider',
