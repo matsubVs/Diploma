@@ -326,6 +326,25 @@ const staticSlider = () => {
 
     documents.init();
 
+    const problems = new SliderCarousel(
+        {
+            main: '.problems-slider-wrap',
+            wrap: '.problems-slider',
+            next: '#problems-arrow_right',
+            prev: '#problems-arrow_left',
+            hideButtons: true,
+            slidesToShow: 1,
+            divideBy: 3,
+            responsive: [{
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 3
+            }]
+        }
+    );
+
+    problems.init();
+
     const navListRepair = new CustomCarousel({
         main: `.nav-wrap-repair`,
         wrap: `.nav-list-repair`,
