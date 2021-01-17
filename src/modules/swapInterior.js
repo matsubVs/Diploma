@@ -8,7 +8,6 @@ const swapInterior = () => {
         [...sliderWrapper.children].forEach(item => {
             if (item.style.display === 'block') {
                 visibleBlock = [...item.children];
-                console.log(visibleBlock);
             }
         });
 

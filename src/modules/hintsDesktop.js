@@ -5,6 +5,8 @@ const hintsDesktop = () => {
         if (document.documentElement.clientWidth <= 1024) {
             return;
         }
+        console.log(document.documentElement.clientWidth);
+
 
         const target = event.target;
         const mainItem = target.closest(`${className}__icon`),
@@ -63,6 +65,7 @@ const hintsDesktop = () => {
             return;
         }
 
+        console.log(document.documentElement.clientWidth);
         const target = event.target;
         const mainItem = target.closest(`${className}__icon`),
             fillItem = mainItem.querySelector(`${className}__icon-inner`),

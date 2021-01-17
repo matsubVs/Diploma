@@ -9,6 +9,7 @@ const additionalNumber = () => {
     
     numberVisibleButton.addEventListener('click', () => {
         if (additionalNumberBlock.style.top === '0px') {
+            numberVisibleButton.style.transform = 'rotateX(180deg)'; 
             animation({
                 duration: 100,
                 timing(timeFraction) {
@@ -21,6 +22,7 @@ const additionalNumber = () => {
             newNumber.style.opacity = 1;
 
         } else {
+            numberVisibleButton.style.transform = ''; 
             animation({
                 duration: 100,
                 timing(timeFraction) {

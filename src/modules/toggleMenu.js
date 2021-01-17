@@ -1,7 +1,7 @@
 const toggleMenu = () => {
     const popupMenu = document.querySelector('.popup-menu'),
         popupDialogMenu = popupMenu.querySelector('.popup-dialog-menu'),
-        menuButton = document.querySelector('.menu'),
+        menuButton = document.querySelectorAll('.menu'),
         popupCloseButton = popupMenu.querySelector('.close-menu'),
         footerUpButton = document.querySelector('.button-footer'),
         servicesButton = [...document.querySelectorAll('.link-list')];
@@ -46,9 +46,9 @@ const toggleMenu = () => {
         }
     });
 
-    menuButton.addEventListener('click', () => {
+    menuButton.forEach(btn => btn.addEventListener('click', () => {
         popupMenuToggler();
-    });
+    }));
 
     footerUpButton.addEventListener('click', event => {
         const innerLink = footerUpButton.querySelector('a');

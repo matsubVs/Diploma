@@ -15,6 +15,7 @@ const staticSlider = () => {
                 position,
                 divideBy,
                 infinity,
+                multiplyBy,
                 hideButtons,
                 widthSlide: Math.floor(100 / this.slidesToShow),
                 hide
@@ -121,9 +122,6 @@ const staticSlider = () => {
                     this.hideSlider();
                 }
 
-                if (this.options.multiplyBy === undefined) {
-                    this.options.multiplyBy = 1;
-                }
                 this.wrap.style.transform = 
                 `translateX(-${((this.options.position * this.options.widthSlide) / this.options.divideBy) * 
                     this.options.multiplyBy}%)`;
@@ -141,10 +139,6 @@ const staticSlider = () => {
                     this.options.position = 0;
                     this.hideSlider();
                 }
-                if (this.options.multiplyBy === undefined) {
-                    this.options.multiplyBy = 1;
-                }
-                console.log(this.slidesToShow);
 
                 this.wrap.style.transform = 
                 `translateX(-${((this.options.position * this.options.widthSlide) / this.options.divideBy) * 
@@ -168,19 +162,20 @@ const staticSlider = () => {
                 const widthWindow = document.documentElement.clientWidth;
                 if (widthWindow < maxResponse) {
                     for (let i = 0; i < allResponse.length; i++) {
-                        if (multy) {
-                            this.options.multiplyBy = multy[i];
-                        }
                         if (widthWindow < allResponse[i]) {
                             this.slidesToShow = this.responsive[i].slidesToShow;
                             this.options.widthSlide = Math.floor(100 / this.slidesToShow);
                             this.addStyle();
+                            if (multy[i]) {
+                                this.options.multiplyBy = multy[i];
+                            }
                         }
                     }
                 } else {
                     this.slidesToShow = slidesToShowDefault;
                     this.options.widthSlide = Math.floor(100 / this.slidesToShow);
                     this.addStyle();
+                    this.options.multiplyBy = 1;
                 }
             };
     
@@ -189,128 +184,6 @@ const staticSlider = () => {
             window.addEventListener('resize', checkResponse);
         }
     }
-
-    const reviews = new SliderCarousel(
-        { main: '.reviews',
-            wrap: '.reviews-slider',
-            next: '#reviews-arrow_right',
-            prev: '#reviews-arrow_left',
-            slidesToShow: 1,
-            hide: true,
-            hideButtons: true,
-            responsive: [
-                {
-                    breakpoint: 600,
-                    slidesToShow: 1,
-                    multiplyBy: 1
-                },
-                {
-                    breakpoint: 576,
-                    slidesToShow: 1,
-                    multiplyBy: 0.5
-                }]
-        }
-    );
-
-    reviews.init();
-
-    const partners = new SliderCarousel(
-        { main: '.partners-wrapper',
-            wrap: '.partners-slider',
-            next: '#partners-arrow_right',
-            prev: '#partners-arrow_left',
-            hideButtons: true,
-            slidesToShow: 3,
-            responsive: [{
-                breakpoint: 1024,
-                slidesToShow: 2,
-                multiplyBy: 1
-            }, 
-            {
-                breakpoint: 579,
-                slidesToShow: 2,
-                multiplyBy: 1
-
-            },
-            {
-                breakpoint: 576,
-                slidesToShow: 1,
-                multiplyBy: 0.8
-            }
-            ]
-        }
-    );
-
-    partners.init();
-
-    const documents = new SliderCarousel(
-        {
-            main: '.transparency-wrapper',
-            wrap: '.transparency-slider',
-            next: '#transparency-arrow_right',
-            prev: '#transparency-arrow_left',
-            hideButtons: true,
-            divideBy: 2,
-            slidesToShow: 3,
-            responsive: [{
-                breakpoint: 1024,
-                slidesToShow: 1,
-                multiplyBy: 1,
-            },
-            {
-                breakpoint: 690,
-                slidesToShow: 1,
-                multiplyBy: 1.2,
-            },
-            {
-                breakpoint: 576,
-                slidesToShow: 1,
-                multiplyBy: 1.7,
-            }]
-        }
-    );
-
-    documents.init();
-
-    const problems = new SliderCarousel(
-        {
-            main: '.problems-slider-wrap',
-            wrap: '.problems-slider',
-            next: '#problems-arrow_right',
-            prev: '#problems-arrow_left',
-            hideButtons: true,
-            slidesToShow: 1,
-            divideBy: 3,
-            responsive: [{
-                breakpoint: 576,
-                slidesToShow: 1,
-                multiplyBy: 3
-            }]
-        }
-    );
-
-    problems.init();
-
-    const formula = new SliderCarousel(
-        {
-            main: '.formula-slider-wrap',
-            wrap: '.formula-slider',
-            next: '#formula-arrow_right',
-            prev: '#formula-arrow_left',
-            hideButtons: true,
-            slidesToShow: 3,
-            responsive: [{
-                breakpoint: 768,
-                slidesToShow: 2
-            },  
-            {
-                breakpoint: 575,
-                slidesToShow: 1
-            }]
-        }
-    );
-
-    formula.init();
 
     class CustomCarousel extends SliderCarousel {
         addStyle() {
@@ -333,9 +206,7 @@ const staticSlider = () => {
                 }
     
                 .custom-slider__item {
-                    // flex: 0 0 ${this.options.widthSlide}% !important;
                     margin: auto 0 !important;
-                    margin-right: ${10 * this.slidesToShow}px !important;
                 }
             `;
     
@@ -349,43 +220,184 @@ const staticSlider = () => {
         }
     }
 
-    const navLists = [...document.querySelectorAll('.nav-wrap')];
-    navLists.forEach(item => {
-        const main = item.classList[1];
-        const wrap = item.querySelector('.nav-list').classList[1];
-        const next = item.querySelector('.nav-arrow_right').id;
-        const prev = item.querySelector('.nav-arrow_left').id;
-
-        if (main === 'nav-wrap-repair') {
-            if (document.querySelector(`.${main}`).closest('.popup-dialog')) {
-                return;
+    class ReviewsCarousel extends SliderCarousel {
+        addStyle() {
+            let style = document.getElementById('ReviewsCarousel-style');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'ReviewsCarousel-style';
             }
-            window.addEventListener('resize', () => {
-                if (document.documentElement.clientWidth <= 1024) {
-                    const slider = new CustomCarousel({
-                        main: `.${main}`,
-                        wrap: `.${wrap}`,
-                        next: `#${next}`,
-                        prev: `#${prev}`,
-                        slidesToShow: 3
-                    });
-
-                    slider.init();
-                }
-            });
-            return;
+            
+            style.textContent = `
+            .reviews-carousel {
+                overflow: hidden !important;
+            }
+            .reviews-carousel__wrap {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                transition: transform 0.5s !important;
+                will-change: transform !important;
+                overflow: visible !important;
+            }
+            .reviews-carousel__item {
+                flex: 0 0 ${this.options.widthSlide}% !important;
+                margin: auto 0 !important;
+            }
+            `;
+            document.head.appendChild(style);
         }
 
-        const slider = new CustomCarousel({
-            main: `.${main}`,
-            wrap: `.${wrap}`,
-            next: `#${next}`,
-            prev: `#${prev}`,
-            slidesToShow: 3
-        });
+        addGloClass() {
+            this.main.classList.add('reviews-carousel');
+            this.wrap.classList.add('reviews-carousel__wrap');
+            for (const slide of this.slides) slide.classList.add('reviews-carousel__item');
+        }
+    }
 
-        slider.init();
+    const reviews = new ReviewsCarousel(
+        { main: '.reviews',
+            wrap: '.reviews-slider',
+            next: '#reviews-arrow_right',
+            prev: '#reviews-arrow_left',
+            slidesToShow: 1,
+            hide: true,
+            hideButtons: true,
+        }
+    );
+
+    reviews.init();
+
+    const partners = new SliderCarousel(
+        { main: '.partners-wrapper',
+            wrap: '.partners-slider',
+            next: '#partners-arrow_right',
+            prev: '#partners-arrow_left',
+            hideButtons: true,
+            slidesToShow: 3,
+            responsive: [{
+                breakpoint: 1024,
+                slidesToShow: 2,
+                multiplyBy: 1
+            }, 
+            {
+                breakpoint: 900,
+                slidesToShow: 2,
+                multiplyBy: 1
+   
+            },
+            {
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 0.8
+            }
+            ]
+        }
+    );
+
+    partners.init();
+
+    const documents = new SliderCarousel(
+        {
+            main: '.transparency-wrapper',
+            wrap: '.transparency-slider',
+            next: '#transparency-arrow_right',
+            prev: '#transparency-arrow_left',
+            hideButtons: true,
+            divideBy: 2,
+            slidesToShow: 3,
+            multiplyBy: 1,
+            responsive: [{
+                breakpoint: 1024,
+                slidesToShow: 1,
+                multiplyBy: 0.8,
+            },
+            {
+                breakpoint: 690,
+                slidesToShow: 1,
+                multiplyBy: 1.2,
+            },
+            {
+                breakpoint: 576,
+                slidesToShow: 1,
+                multiplyBy: 1.7,
+            }]
+        }
+    );
+
+    documents.init();
+
+    const navListRepair = new CustomCarousel({
+        main: `.nav-wrap-repair`,
+        wrap: `.nav-list-repair`,
+        next: `#nav-arrow-repair-right_base`,
+        prev: `#nav-arrow-repair-left_base`,
+        slidesToShow: 3,
+        multiplyBy: 1,
+        hideButtons: true,
+        responsive: [{
+            breakpoint: 576,
+            slidesToShow: 1,
+            multiplyBy: 0.2
+        }]
     });
+
+    navListRepair.init();
+
+    const navListDesigns = new CustomCarousel({
+        main: `.nav-wrap-designs`,
+        wrap: `.nav-list-designs`,
+        next: `#nav-arrow-designs_right`,
+        prev: `#nav-arrow-designs_left`,
+        slidesToShow: 3,
+        multiplyBy: 1,
+        hideButtons: true,
+        responsive: [{
+            breakpoint: 576,
+            slidesToShow: 1,
+            multiplyBy: 0.2
+        }]
+    });
+
+    navListDesigns.init();
+
+    const navListDesignsPopup = new CustomCarousel({
+        main: `.nav-wrap-designs-popup`,
+        wrap: `.nav-list-designs-popup `,
+        next: `#nav-arrow-popup-designs_right`,
+        prev: `#nav-arrow-popup-designs_left`,
+        slidesToShow: 2,
+        multiplyBy: 1,
+        hideButtons: true,
+        responsive: [{
+            breakpoint: 576,
+            slidesToShow: 1,
+            multiplyBy: 0.2
+        }]
+    });
+
+    navListDesignsPopup.init();
+
+    const navListRepairPopup = new CustomCarousel({
+        main: `.nav-wrap-repair-popup`,
+        wrap: `.nav-list-popup-repair`,
+        next: `#nav-arrow-popup-repair_right`,
+        prev: `#nav-arrow-popup-repair_left`,
+        slidesToShow: 3,
+        multiplyBy: 1,
+        hideButtons: true,
+        responsive: [{
+            breakpoint: 1024,
+            slidesToShow: 2,
+            multiplyBy: 0.3
+        },
+        {
+            breakpoint: 576,
+            slidesToShow: 1,
+            multiplyBy: 0.18
+        }]
+    });
+
+    navListRepairPopup.init();
 
     const portfolio = new SliderCarousel({
         main: '.portfolio-slider-wrap',
@@ -396,9 +408,14 @@ const staticSlider = () => {
         hideButtons: true,
         multiplyBy: 1.2,
         responsive: [{
-            breakpoint: 1024,
+            breakpoint: 1140,
             slidesToShow: 3,
-            multiplyBy: 1.4
+            multiplyBy: 1.3
+        },
+        {
+            breakpoint: 1024,
+            slidesToShow: 2,
+            multiplyBy: 1
         },
         {
             breakpoint: 900,
