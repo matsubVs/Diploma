@@ -422,11 +422,17 @@ const staticSlider = () => {
             slidesToShow: 3,
             multiplyBy: 1,
             hideButtons: true,
-            responsive: [{
-                breakpoint: 576,
-                slidesToShow: 1,
-                multiplyBy: 0.2
-            }]
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    slidesToShow: 2,
+                    multiplyBy: 0.3
+                },
+                {
+                    breakpoint: 576,
+                    slidesToShow: 1,
+                    multiplyBy: 0.16
+                }]
         }
     );
 
