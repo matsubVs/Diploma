@@ -338,7 +338,7 @@ const staticSlider = () => {
             responsive: [{
                 breakpoint: 576,
                 slidesToShow: 1,
-                multiplyBy: 3
+                multiplyBy: 2.5
             }]
         }
     );
@@ -481,10 +481,13 @@ const staticSlider = () => {
         const wrapRepairPopup = document.querySelector('.nav-list-popup-repair');
         if (document.documentElement.clientWidth <= 1024) {
             wrapRepair.classList.add('custom-slider__wrap');
-            wrapRepairPopup.classList.add('custom-slider__wrap');              
+            wrapRepairPopup.classList.add('custom-slider__wrap');  
+            [...wrapRepair.children].forEach(item => item.classList.add('custom-slider__item'));
         } else {
             wrapRepair.classList.remove('custom-slider__wrap');
             wrapRepairPopup.classList.remove('custom-slider__wrap');            
+            wrapRepairPopup.style.transform = '';       
+            [...wrapRepair.children].forEach(item => item.classList.remove('custom-slider__item'));
         }
     };
 
