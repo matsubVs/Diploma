@@ -465,21 +465,22 @@ const staticSlider = () => {
 
     portfolio.init();
 
-    let flag = false;
-    const initTabs = () => {
-        if (document.documentElement.clientWidth < 1024) {
-            navListRepair.init();
-            navListRepairPopup.init();
-            flag = true;
+    navListRepair.init();
+    navListRepairPopup.init();
+
+    const tabsConfigure = () => {
+        const wrapRepair = document.querySelector('.nav-list-repair');
+        const wrapRepairPopup = document.querySelector('.nav-list-popup-repair');
+        if (document.documentElement.clientWidth <= 1024) {
+            wrapRepair.classList.add('custom-slider__wrap');
+            wrapRepairPopup.classList.add('custom-slider__wrap');              
+        } else {
+            wrapRepair.classList.remove('custom-slider__wrap');
+            wrapRepairPopup.classList.remove('custom-slider__wrap');            
         }
-        
     };
 
-    window.addEventListener('resize', () => {
-        if (!flag) {
-            initTabs();
-        }
-    });
+    window.addEventListener('resize', () => tabsConfigure);
 
     window.addEventListener('resize', () => {
         if (document.documentElement.clientWidth < 578) {
