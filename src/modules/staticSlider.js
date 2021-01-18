@@ -481,12 +481,17 @@ const staticSlider = () => {
         }
     });
 
-    window.addEventListener('resize', () => {
+    const fixTabs = () => {
         if (document.documentElement.clientWidth < 578) {
             document.querySelector('.portfolio-slider').classList.remove('glo-slider__wrap');
             document.querySelector('.portfolio-slider-wrap').classList.remove('glo-slider');
+        } else {
+            document.querySelector('.portfolio-slider').classList.add('glo-slider__wrap');
+            document.querySelector('.portfolio-slider-wrap').classList.add('glo-slider');
         }
-    });
+    };
+    fixTabs();
+    window.addEventListener('resize', () => fixTabs());
 
     const problemsWrapper = document.querySelector('.problems-slider-wrap');
     problemsWrapper.classList.remove('glo-slider');
