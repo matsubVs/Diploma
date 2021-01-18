@@ -19,6 +19,8 @@ const allServicesPopup = () => {
 
             if (target.closest('.popup-repair-types-nav__item')) {
                 const clickedButton = target.closest('.popup-repair-types-nav__item');
+                const blockTitle = document.querySelector('.popup-repair-types-content__head-title');
+                blockTitle.textContent = clickedButton.textContent;
                 buttonList.forEach((item, index) => {
                     if (item === clickedButton) {
                         tableList[index].style.display = 'block';
