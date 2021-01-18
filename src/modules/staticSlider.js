@@ -220,26 +220,26 @@ const staticSlider = () => {
         }
     }
 
-    class ReviewsCarousel extends SliderCarousel {
+    class DefaultCarousel extends SliderCarousel {
         addStyle() {
-            let style = document.getElementById('ReviewsCarousel-style');
+            let style = document.getElementById('DefaultCarousel-style');
             if (!style) {
                 style = document.createElement('style');
-                style.id = 'ReviewsCarousel-style';
+                style.id = 'DefaultCarousel-style';
             }
             
             style.textContent = `
-            .reviews-carousel {
+            .default-carousel {
                 overflow: hidden !important;
             }
-            .reviews-carousel__wrap {
+            .default-carousel__wrap {
                 display: flex !important;
                 flex-wrap: nowrap !important;
                 transition: transform 0.5s !important;
                 will-change: transform !important;
                 overflow: visible !important;
             }
-            .reviews-carousel__item {
+            .default-carousel__item {
                 flex: 0 0 ${this.options.widthSlide}% !important;
                 margin: auto 0 !important;
             }
@@ -248,13 +248,13 @@ const staticSlider = () => {
         }
 
         addGloClass() {
-            this.main.classList.add('reviews-carousel');
-            this.wrap.classList.add('reviews-carousel__wrap');
-            for (const slide of this.slides) slide.classList.add('reviews-carousel__item');
+            this.main.classList.add('default-carousel');
+            this.wrap.classList.add('default-carousel__wrap');
+            for (const slide of this.slides) slide.classList.add('default-carousel__item');
         }
     }
 
-    const reviews = new ReviewsCarousel(
+    const reviews = new DefaultCarousel(
         { main: '.reviews',
             wrap: '.reviews-slider',
             next: '#reviews-arrow_right',
@@ -296,35 +296,24 @@ const staticSlider = () => {
 
     partners.init();
 
-    const documents = new SliderCarousel(
+    const documents = new DefaultCarousel(
         {
             main: '.transparency-wrapper',
             wrap: '.transparency-slider',
             next: '#transparency-arrow_right',
             prev: '#transparency-arrow_left',
             hideButtons: true,
-            divideBy: 2,
             slidesToShow: 3,
-            multiplyBy: 1,
             responsive: [{
                 breakpoint: 1024,
                 slidesToShow: 1,
-                multiplyBy: 0.8,
-            },
-            {
-                breakpoint: 690,
-                slidesToShow: 1,
-                multiplyBy: 1.2,
-            },
-            {
-                breakpoint: 576,
-                slidesToShow: 1,
-                multiplyBy: 1.7,
+                multiplyBy: 1,
             }]
         }
     );
 
     documents.init();
+
 
     const problems = new SliderCarousel(
         {
@@ -488,6 +477,7 @@ const staticSlider = () => {
             wrapRepairPopup.classList.remove('custom-slider__wrap');            
             wrapRepairPopup.style.transform = '';       
             [...wrapRepair.children].forEach(item => item.classList.remove('custom-slider__item'));
+            document.querySelector('.transparency-slider ').style.transform = '';
         }
     };
 
