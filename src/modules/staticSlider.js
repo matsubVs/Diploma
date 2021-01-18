@@ -465,21 +465,8 @@ const staticSlider = () => {
 
     portfolio.init();
 
-    let flag = false;
-    const initTabs = () => {
-        if (document.documentElement.clientWidth < 1024) {
-            navListRepair.init();
-            navListRepairPopup.init();
-            flag = true;
-        }
-        
-    };
-
-    window.addEventListener('resize', () => {
-        if (!flag) {
-            initTabs();
-        }
-    });
+    navListRepair.init();
+    navListRepairPopup.init();
 
     const fixTabs = () => {
         if (document.documentElement.clientWidth < 578) {
@@ -489,7 +476,18 @@ const staticSlider = () => {
             document.querySelector('.portfolio-slider').classList.add('glo-slider__wrap');
             document.querySelector('.portfolio-slider-wrap').classList.add('glo-slider');
         }
+
+        const wrapRepair = document.querySelector('.nav-list-repair');
+        const wrapRepairPopup = document.querySelector('.nav-list-popup-repair');
+        if (document.documentElement.clientWidth <= 1024) {
+            wrapRepair.classList.add('custom-slider__wrap');
+            wrapRepairPopup.classList.add('custom-slider__wrap');              
+        } else {
+            wrapRepair.classList.remove('custom-slider__wrap');
+            wrapRepairPopup.classList.remove('custom-slider__wrap');            
+        }
     };
+
     fixTabs();
     window.addEventListener('resize', () => fixTabs());
 
