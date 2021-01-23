@@ -115,7 +115,7 @@ const allServicesPopup = () => {
     };
 
     const fetchData = () => {
-        fetch('./db.json')
+        fetch('db.json')
             .then(response => response.json())
             .then(object => setData(object));
     };
